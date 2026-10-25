@@ -1,0 +1,10 @@
+[project]
+name = "roznitsa-procurement-control"
+version = "0.1.0"
+description = "Rules and validation for Roznitsa procurement selection"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-q"
