@@ -1,0 +1,84 @@
+{
+  "version": "2026-10-26",
+  "precedence": "latest_explicit_user_instruction",
+  "matching": {
+    "semantic_target": 0.8,
+    "category_is_hard_filter": true,
+    "preferred_mass_delta_ratio": 0.2,
+    "preserve_packaging_format_when_possible": true,
+    "prefer_same_brand_or_line": true,
+    "prefer_exact_flavor_first": true,
+    "preserve_assortment": true,
+    "blank_rows_allowed_only_by_explicit_user_instruction": true
+  },
+  "supplier_rules": {
+    "forbidden": [
+      "Тэн",
+      "Че Ман Су"
+    ],
+    "conditional": {
+      "Восток": {
+        "allowed_only_when": {
+          "manufacturer": "Орими",
+          "price_list": "Орими"
+        },
+        "working_supplier_name": "Восток",
+        "working_manufacturer_name": "Орими"
+      }
+    },
+    "brand_supplier_lock": {
+      "Махеевъ": "Амбирс"
+    },
+    "source_supplier_canonical_names": {
+      "ВИАНГ": "ВИАНГ",
+      "Проект Инвест": "Проект Инвест",
+      "Черноголовка": "Черноголовка (Сах-Трейд)"
+    }
+  },
+  "source_rules": {
+    "current_supplier_price_list_is_primary": true,
+    "historical_sheet": {
+      "name": "Прод июль-сент 25",
+      "use_as_hint_only": true,
+      "may_supply_current_price": false,
+      "may_supply_current_stock": false,
+      "may_supply_current_pack_size": false,
+      "may_supply_supplier_eligibility": false
+    },
+    "internet": {
+      "may_confirm_manufacturer": true,
+      "may_confirm_packaging": true,
+      "may_confirm_missing_characteristics": true,
+      "may_supply_procurement_price": false
+    }
+  },
+  "price_rules": {
+    "normalize_before_compare": true,
+    "preserve_original_price_and_unit": true,
+    "equal_to_purchase_fact_is_allowed": true,
+    "higher_than_purchase_fact_is_red": true,
+    "discount_requires_confirmation_for_exact_item_or_group": true
+  },
+  "stock_and_pack_rules": {
+    "stock_limits_order": true,
+    "case_pack_required": true,
+    "round_up_to_full_transport_case": true,
+    "multi_level_pack_must_be_fully_expanded": true,
+    "weight_uses_selected_item_pack_size": true
+  },
+  "traceability": {
+    "required_fields": [
+      "supplier",
+      "source_file",
+      "source_sheet",
+      "source_row",
+      "selected_name",
+      "original_price",
+      "price_unit",
+      "stock",
+      "case_pack",
+      "manufacturer"
+    ],
+    "selected_name_price_supplier_same_source": true
+  }
+}
