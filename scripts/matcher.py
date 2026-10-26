@@ -30,9 +30,16 @@ def _same(a: str | None, b: str | None) -> bool:
     return bool(_norm(a)) and _norm(a) == _norm(b)
 
 
+def _mass_delta(requested: Product, candidate: Product) -> float | None:
+    if requested.mass_g and candidate.mass_g:
+        return abs(candidate.mass_g - requested.mass_g) / requested.mass_g
+    return None
+
+
 def evaluate_analogue(requested: Product, candidate: Product, preferred_mass_delta: float = 0.20) -> MatchResult:
     reasons: List[str] = []
 
+    # Hard barrier: cross-category substitutions never reach ranking/Excel.
     if not _same(requested.category, candidate.category):
         return MatchResult(False, 0.0, ("Категория товара не совпадает",))
 
@@ -44,8 +51,8 @@ def evaluate_analogue(requested: Product, candidate: Product, preferred_mass_del
         else:
             reasons.append("Формат упаковки отличается")
 
-    if requested.mass_g and candidate.mass_g:
-        delta = abs(candidate.mass_g - requested.mass_g) / requested.mass_g
+    delta = _mass_delta(requested, candidate)
+    if delta is not None:
         if delta <= preferred_mass_delta:
             score += 0.12
         else:
@@ -72,7 +79,37 @@ def evaluate_analogue(requested: Product, candidate: Product, preferred_mass_del
     return MatchResult(True, min(score, 1.0), tuple(reasons))
 
 
-def rank_candidates(requested: Product, candidates: Iterable[Product]) -> list[tuple[Product, MatchResult]]:
-    evaluated = [(candidate, evaluate_analogue(requested, candidate)) for candidate in candidates]
+def _preselect_by_mass(
+    requested: Product,
+    evaluated: list[tuple[Product, MatchResult]],
+    preferred_mass_delta: float = 0.20,
+) -> list[tuple[Product, MatchResult]]:
+    """Drop far-mass candidates when at least one close-mass candidate exists.
+
+    This prevents lexical/brand anchoring from pushing a 70–90 g item ahead of a
+    110–120 g item for a 120 g request merely because the brand name matches.
+    """
+    close = [
+        item
+        for item in evaluated
+        if (delta := _mass_delta(requested, item[0])) is not None and delta <= preferred_mass_delta
+    ]
+    if not close:
+        return evaluated
+
+    without_mass = [item for item in evaluated if _mass_delta(requested, item[0]) is None]
+    return close + without_mass
+
+
+def rank_candidates(
+    requested: Product,
+    candidates: Iterable[Product],
+    preferred_mass_delta: float = 0.20,
+) -> list[tuple[Product, MatchResult]]:
+    evaluated = [
+        (candidate, evaluate_analogue(requested, candidate, preferred_mass_delta))
+        for candidate in candidates
+    ]
     allowed = [item for item in evaluated if item[1].allowed]
-    return sorted(allowed, key=lambda item: item[1].score, reverse=True)
+    preselected = _preselect_by_mass(requested, allowed, preferred_mass_delta)
+    return sorted(preselected, key=lambda item: item[1].score, reverse=True)
