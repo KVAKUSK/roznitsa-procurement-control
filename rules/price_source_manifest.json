@@ -1,0 +1,40 @@
+{
+  "library_folder": "/работа",
+  "updated_at": "2026-10-26",
+  "policy": {
+    "semantic_library_search_is_complete_catalog": false,
+    "require_manifest_preflight_before_matching": true,
+    "require_synced_search_index_for_allowed_sources": true,
+    "current_price_must_be_verified_from_raw_source": true
+  },
+  "sources": [
+    {"file":"Амбирс.xlsx","supplier":"Амбирс","allowed":true},
+    {"file":"Бородина.xls","supplier":"Бородина","allowed":true},
+    {"file":"ВИАНГ.xlsx","supplier":"ВИАНГ / Асторг","allowed":true},
+    {"file":"Владторг.xlsx","supplier":"Владторг","allowed":true},
+    {"file":"Восток.xlsx","supplier":"Восток","allowed":false,"reason":"Общий прайс Востока исключён"},
+    {"file":"гапеев.xls","supplier":"Гапеев","allowed":true},
+    {"file":"Еврофуд.xlsx","supplier":"Еврофуд","allowed":true},
+    {"file":"КДВ.xls","supplier":"КДВ","allowed":true,"conditional":true},
+    {"file":"Ким.pdf","supplier":"Ким","allowed":true},
+    {"file":"Континент.xlsx","supplier":"Континент","allowed":true},
+    {"file":"лидер.xls","supplier":"Лидер","allowed":true},
+    {"file":"марс эником.xls","supplier":"Марс Эником","allowed":true},
+    {"file":"милк хауз.xls","supplier":"Милк Хауз","allowed":true},
+    {"file":"Морозко.xlsx","supplier":"Морозко","allowed":true},
+    {"file":"Нечаев.xlsx","supplier":"Нечаев","allowed":true},
+    {"file":"пасеева.xlsx","supplier":"Пасеева","allowed":true},
+    {"file":"Планета Витаминов.xlsx","supplier":"Планета Витаминов","allowed":true},
+    {"file":"Прайс Орими.xlsx","supplier":"Восток","allowed":true,"manufacturer_lock":"Орими","reason":"Разрешённое исключение для Орими"},
+    {"file":"проект инвест.xls","supplier":"Проект Инвест","allowed":true},
+    {"file":"проект инвест1.xls","supplier":"Проект Инвест","allowed":true},
+    {"file":"проект инвест3.xlsx","supplier":"Проект Инвест","allowed":true},
+    {"file":"сапико.xlsx","supplier":"Сапико","allowed":true},
+    {"file":"сахалинснабцентр.xls","supplier":"Сахалинснабцентр","allowed":true},
+    {"file":"славянка эником.xlsx","supplier":"Славянка Эником","allowed":true},
+    {"file":"Судариков 1.xls","supplier":"Судариков","allowed":true,"group":"Судариков"},
+    {"file":"Судариков 2.xls","supplier":"Судариков","allowed":true,"group":"Судариков"},
+    {"file":"Че Ман Су.xlsx","supplier":"Че Ман Су","allowed":false,"reason":"Исключён"},
+    {"file":"черноголовка.xls","supplier":"Черноголовка (Сах-Трейд)","allowed":true}
+  ]
+}
